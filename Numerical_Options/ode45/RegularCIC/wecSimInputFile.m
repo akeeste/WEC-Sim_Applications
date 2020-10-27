@@ -22,7 +22,7 @@ body(1) = bodyClass('../../hydroData/ellipsoid.h5');
 body(1).mass = 'equilibrium';           
 body(1).momOfInertia = ...              
     [1.375264e6 1.375264e6 1.341721e6];      
-body(1).geometryFile = '../../geometry/elipsoid.stl' ;    
+body(1).geometryFile = '../../geometry/ellipsoid.stl' ;    
 body(1).viscDrag.cd=[1 0 1 0 1 0];
 body(1).viscDrag.characteristicArea=[25 0 pi*5^2 0 pi*5^5 0];
 

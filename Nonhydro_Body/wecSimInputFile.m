@@ -1,11 +1,12 @@
 %% Simulation Data
 simu = simulationClass();               
-simu.simMechanicsFile = 'OSWEC.slx';  	
+simu.simMechanicsFile = 'OSWEC.slx';   
 simu.mode = 'normal';                   
-simu.explorer='on';                     
+simu.explorer='off';                     
 simu.startTime = 0;                    
 simu.rampTime = 100;                       
-simu.endTime=400;                       
+simu.endTime = 400;
+simu.solver = 'ode4';
 simu.dt = 0.1;                          
 
 %% Wave Information
@@ -39,6 +40,5 @@ constraint(1).loc = [0 0 -10];
 % Rotational PTO
 pto(1) = ptoClass('PTO1');                     
 pto(1).k = 0;                                  
-pto(1).c = 0;                                  
+pto(1).c = 12000;                                  
 pto(1).loc = [0 0 -8.9];                       
-

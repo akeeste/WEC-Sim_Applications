@@ -2,16 +2,15 @@
 
 clear all; close all; clc;
 
-cd(['./ode4'])
-    cd(['./Regular'])
-    wecSim
-    cd(['../RegularCIC'])
-    wecSim
-cd(['../../ode45'])
-    cd(['./Regular'])
-    wecSim
-    cd(['../RegularCIC'])
-    wecSim
-cd ../..
+cd(['./nlHydro_0'])
+wecSim
 
-plotNL    
+cd(['../nlHydro_1'])
+wecSim
+
+cd(['../nlHydro_2'])
+wecSim
+
+cd ..
+
+plotNL
