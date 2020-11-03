@@ -37,6 +37,11 @@ body(1).geometryFile = '../geometry/flap.stl';     % Geometry File
 body(1).mass = 12700;                           % User-Defined mass [kg]
 body(1).momOfInertia = [1.85e6 1.85e6 1.85e6];  % Moment of Inertia [kg-m^2]
 %body(1).viscDrag.cd = [3 3 3 3 3 3];
+body(1).morisonElement.cd = [0 0 1];
+body(1).morisonElement.ca = [0 0 1];
+body(1).morisonElement.characteristicArea = [0 0 1];
+body(1).morisonElement.VME = [0.01];
+body(1).morisonElement.rgME = [0 0 -2];
 
 % Base
 body(2) = bodyClass('../hydroData/oswec.h5');      % Initialize bodyClass for Base

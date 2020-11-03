@@ -10,7 +10,7 @@ simu.morisonElement    = 1;                 % Turn Morison Element on
 
 %% Wave Information  
 % Regular Waves  
-waves = waveClass('noWaveCIC');    
+waves = waveClass('noWaveCIC');
 
 %% Body Data
 % Float

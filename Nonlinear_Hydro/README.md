@@ -1,6 +1,6 @@
 # Nonlinear Hydro
 
-**Author:**  	Adam Keester
+**Author:**  	Yi-Hsiang Yu and Kelley Ruehl, Edited 2020 by Adam Keester
 
 **Version:** 	WEC-Sim v4.1
 
