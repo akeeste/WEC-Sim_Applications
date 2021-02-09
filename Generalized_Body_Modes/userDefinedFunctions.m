@@ -17,9 +17,6 @@ output.plotResponse(1,3);
 output.plotForces(1,3);
 
 % GBM response
-% Flex_out.signals.values(t/dt,40): 
-% pos x 4, vel x 4, acc x 4, ftotal x 4, fex x 4, 
-% frd x 4, fam x 4, fhs x 4, fdrag  x 4, fld x 4,
 for i=1:4
     figure()
     plot(Flex_out.time, Flex_out.signals.values(:,i),'r',...

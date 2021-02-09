@@ -16,15 +16,17 @@ for i = 1:length(cases)
         'linestyle',lin{i},'color',col{i})
     ylim([-6*10^5 6*10^5])
     hold on
-    title('Heave Radiation Damping Force')
-    ylabel('Body 1 (N)')
+    title({'Body-to-body Comparison:','RM3 - Heave Radiation Damping Force'});
+    ylabel('Float (N)')
+    xlim([150 165]);
     
     subplot(2,1,2)
     plot(output.bodies(2).time,output.bodies(2).forceRadiationDamping(:,3),...
         'linestyle',lin{i},'color',col{i})
-    ylim([-6*10^5 6*10^5])
+    ylim([-3*10^5 3*10^5])
     xlabel('Time (s)')
-    ylabel('Body 2 (N)')
+    ylabel('Spar (N)')
+    xlim([150 165]);
     hold on
     cd ../..
 end

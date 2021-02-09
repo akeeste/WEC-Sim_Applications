@@ -13,11 +13,15 @@ subplot(2,1,1)
 plot(yawOff.bodies(1).time,(180/pi).*yawOff.bodies(1).position(:,end),'-b','LineWidth',1.4);
 hold on; grid on;
 plot(yawOn.bodies(1).time,(180/pi).*yawOn.bodies(1).position(:,end),'--r','LineWidth',1.2);
-plot(yawOn.bodies(1).time, repmat(10,size(yawOn.bodies(1).time)),':k')
-ylabel('Yaw Position (deg)')
-legend('Passive yaw correction OFF','Passive Yaw Correction ON','Wave Direction')
+plot(yawOn.bodies(1).time, repmat(10,size(yawOn.bodies(1).time)),':k');
+ylabel('Yaw Position (deg)');
+legend('Passive yaw correction OFF','Passive yaw Correction ON','Wave Direction');
+title({'Passive Yaw Comparison:','OSWEC Yaw Position & Force'});
+xlim([0 300]);
+
 subplot(2,1,2)
 plot(yawOff.bodies(1).time,yawOff.bodies(1).forceExcitation(:,end),'-b','LineWidth',1.4);
 hold on; grid on;
 plot(yawOn.bodies(1).time,yawOn.bodies(1).forceExcitation(:,end),'--r','LineWidth',1.2);
 ylabel('Yaw Excitation Force (N-m)')
+xlim([0 300]);

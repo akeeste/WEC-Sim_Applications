@@ -34,6 +34,8 @@ cd(['../../../ode45/'])
         load ellipsoid_matlabWorkspace.mat
         ode45.regSS.time = output.bodies.time;
         ode45.regSS.pos = output.bodies.position(:,3);
+        
+    cd ../../..
 
 figure
     f = gcf;
@@ -63,8 +65,9 @@ figure
     plot(ode45.regSS.time,ode45.regSS.pos,...
         'linestyle',lin{6},'color',col{6})
     
-    title('Ellipsoid Heave Displacement')
-    ylabel('displacement (m)')    
-    legend('ode4','ode45','ode4 CIC','ode45 CIC','ode4 SS','ode45 SS',...
-        'Location','northeast','Orientation','horizontal')        
+%     xlim([81.5 82.3])
+%     ylim([-2.73 -2.64])
+    title({'Numerical Options Comparison:','Ellipsoid Heave Displacement'});
+    ylabel('Displacement (m)');
+    legend('ode4','ode45','ode4 CIC','ode45 CIC','ode4 SS','ode45 SS');      
      
