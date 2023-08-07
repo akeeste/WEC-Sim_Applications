@@ -1,14 +1,9 @@
-# MOST_simscape
+# Morison Element
 
-WEC-Sim source changelog:
-- WECSim_Lib.slx
-- MOST.slx
-- initializeWecSim.m
-- postProcessWecSim.m
-- mooringClass.m
-- windClass.m
-- windturbineClass.m
-- responseclass.m
-- windTurbine folder including look-up tables of aerodynamic loads and wind turbine properties
-- turbsim folder including look-up table of wind
-- mooring folder including look-up table of mooring
+**Author:**  	MORE Energy Lab
+
+**Version:** 	WEC-Sim v5.2
+
+**Geometry**	Floating offshore wind simulation using WEC-Sim+MOST
+
+WEC-Sim+MOST simulation of a floating, offshore, horizontal axis, three-bladed wind turbine. TurbSim used to define the wind conditions.
