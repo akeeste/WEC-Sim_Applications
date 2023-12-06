@@ -1,0 +1,4 @@
+! Variable hydrodynamics - fully open cube
+ RAMGBMAX=6.0     (max 6GB RAM)
+ NCPU=4           (4 CPUS)
+ USERID_PATH=C:\wamitv7    (path to WAMIT directory)

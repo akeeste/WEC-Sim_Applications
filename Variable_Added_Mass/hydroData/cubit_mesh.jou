@@ -1,0 +1,24 @@
+# Cubit meshing
+reset
+brick x 3 y 3 z 3
+
+# Remove cube top
+separate surf 1
+delete surf 1
+
+# Apply surface schemes, intervals and mesh
+surf all scheme mesh
+surf all size 0.3
+mesh surf all
+
+# save mesh to gdf format
+set duplicate block elements off
+block 1 add surface all
+block 1 name "cube"
+export gdf "half_open_cube.gdf" overwrite
+
+# Create the fully open cube
+separate surf 2
+delete surf 2
+block 1 add surface all
+export gdf "fully_open_cube.gdf" overwrite
