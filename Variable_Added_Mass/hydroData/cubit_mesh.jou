@@ -11,6 +11,10 @@ mesh surf all
 qtri surf all
 export stl binary "../geometry/cube.stl" mesh overwrite
 
+# remove triangular stl mesh
+delete mesh volume 1 propagate
+reset volume 1
+
 # Apply surface schemes, intervals and mesh
 surf all scheme mesh
 surf all size 0.3
