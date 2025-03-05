@@ -1,0 +1,10 @@
+! Variable hydrodynamics - bottom-louvered cube at 50 degrees open
+ 1   0   2   0   0   0   0   0   0       IOPTN(1:9)
+ 1000                                    RHO
+ 0. 0. -4.5                              XCG(1) YCG(1) ZCG(1)
+ 0                                       IMASS
+ 0                                       IDAMP
+ 0                                       ISTIF
+ -1                                      NBETA (array BETA follows)
+ 0 1                                     BETA
+ 0                                       NFIELD

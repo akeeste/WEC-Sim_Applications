@@ -8,23 +8,25 @@ simu.rampTime = 50;                     % Wave Ramp Time [s]
 simu.endTime = 200;                     % Simulation End Time [s]
 simu.solver = 'ode4';                   % simu.solver = 'ode4' for fixed step & simu.solver = 'ode45' for variable step 
 simu.dt = 1e-3;                         % Simulation time-step [s]
+simu.dtOut = 1e-2;
 simu.cicEndTime = 20;
+simu.cicDt = 1e-2;
 
 %% Wave Information
 % % noWave
 % waves = waveClass('noWave');       % Initialize Wave Class and Specify Type  
 % waves.period = 8;
 
-% % noWaveCIC, no waves with radiation CIC  
-% waves = waveClass('noWaveCIC');       % Initialize Wave Class and Specify Type  
+% % noWaveCIC, no waves with radiation CIC
+% waves = waveClass('noWaveCIC');       % Initialize Wave Class and Specify Type
 
-% Regular Waves  
-waves = waveClass('regular');           % Initialize Wave Class and Specify Type                                 
+% Regular Waves
+waves = waveClass('regularCIC');           % Initialize Wave Class and Specify Type
 waves.height = 2.5;                     % Wave Height [m]
 waves.period = 8;                       % Wave Period [s]
 
 % % Regular Waves with CIC
-% waves = waveClass('regularCIC');          % Initialize Wave Class and Specify Type                                 
+% waves = waveClass('regularCIC');          % Initialize Wave Class and Specify Type
 % waves.height = 2.5;                       % Wave Height [m]
 % waves.period = 8;                         % Wave Period [s]
 
@@ -51,15 +53,38 @@ waves.period = 8;                       % Wave Period [s]
 % simu.stateSpace = 1;                      % Turn on State Space
 % waves.bem.option = 'Traditional';         % Uses 1000 frequnecies
 
+waves.marker.location = [0 0]; % for visualization
+
+%% Variable hydro
+% 0 degrees = fully closed, 100 degrees = fully open
+angles = 0:5:90;
+hydroFiles = fullfile(strcat('hydroData/cube_', arrayfun(@num2str, angles, 'UniformOutput', 0), '.h5'));
+
 %% Body Data
 % Float
-body(1) = bodyClass('hydroData/half_open_cube.h5'); % Create the cube
+body(1) = bodyClass(hydroFiles); % Create the cube
 body(1).geometryFile = 'geometry/cube.stl';         % Location of Geometry File
 body(1).mass = 'equilibrium';                       % Body mass equal to the displaced water mass
-body(1).inertia = [1e3 1e3 1e3];                    % Arbitrary approximation  
+body(1).inertia = [1e3 1e3 1e3];                    % Arbitrary approximation
+body(1).variableHydro.option = 0;
+body(1).variableHydro.hydroForceIndexInitial = 1;
+
+% Viscous drag
+cubeArea = pi/4*1^2;
+cubeCd = 1.05;
+for i = 1:length(angles)
+    % Initialize drag arrays to the correct sizes
+    body(1).quadDrag(i).drag = zeros(6);
+    body(1).quadDrag(i).cd = zeros(1,6);
+    body(1).quadDrag(i).area = zeros(1,6);
+
+    % Define area and cd for each angle
+    body(1).quadDrag(i).area = cubeArea * cosd(angles(i)) * [1 1 1 0 0 0];
+    body(1).quadDrag(i).cd = cubeCd * [1 1 1 0 0 0];
+end; clear i
 
 %% PTO and Constraint Parameters
-pto(1) = ptoClass('Constraint1');
+pto(1) = ptoClass('pto1');
 pto(1).location = [0 0 -3];
 pto(1).stiffness = 1e3;
 pto(1).damping = 1e2;

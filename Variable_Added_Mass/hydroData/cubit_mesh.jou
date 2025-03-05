@@ -1,33 +1,69 @@
-# Cubit meshing
-reset
-brick x 3 y 3 z 3
+#!python
+#!python
+import numpy as np
+import os as os
 
-# Remove cube top
-separate surf 1
-delete surf 1
+for angle in np.arange(0, 91, 10):
 
-# Save mesh to stl format
-mesh surf all
-qtri surf all
-export stl binary "../geometry/cube.stl" mesh overwrite
+    cubit.cmd("reset")
+    cubit.cmd("brick x 3 y 3 z 3")
+    cubit.cmd("separate surface 1")
+    cubit.cmd("delete surface 1")
+    cubit.cmd("separate surface 2")
+    cubit.cmd("webcut volume 3 with plane xplane offset 0")
+    cubit.cmd(
+        "rotate volume 4 angle " + str(angle) + " about vertex 7 8 include_merged"
+    )
+    cubit.cmd(
+        "rotate volume 3 angle " + str(angle) + " about vertex 5 6 include_merged"
+    )
+    cubit.cmd("regularize surf all")
+    cubit.cmd("unite vol all")
+    cubit.cmd("webcut volume all with plane xplane offset 0")
+    cubit.cmd("webcut volume all with plane yplane offset 0")
+    cubit.cmd("delete volume 1 5 7")
+    cubit.cmd("regularize surf all")
+    cubit.cmd("unite vol all")
+    cubit.cmd("surface all scheme map")
+    cubit.cmd("surface all size 0.2")
+    cubit.cmd("mesh surface all")
 
-# remove triangular stl mesh
-delete mesh volume 1 propagate
-reset volume 1
+    # Create block and save gdf
+    cubit.cmd("block 1 add surface all")
+    cubit.cmd('block 1 name "cube"')
 
-# Apply surface schemes, intervals and mesh
-surf all scheme mesh
-surf all size 0.3
-mesh surf all
+    filedir = "cube_" + str(angle)
+    filename = filedir + "/" + "cube_" + str(angle) + ".gdf"
+    if not os.path.isdir(filedir):
+        os.mkdir(filedir)
+    cubit.cmd('export gdf "' + filename + '" isx 1 isy 1 overwrite')
 
-# save mesh to gdf format
-set duplicate block elements off
-block 1 add surface all
-block 1 name "cube"
-export gdf "half_open_cube/half_open_cube.gdf" overwrite
+    # Read in the GDF file and reformat
+    linesep = "\n"
 
-# Create the fully open cube
-separate surf 2
-delete surf 2
-block 1 add surface all
-export gdf "fully_open_cube/fully_open_cube.gdf" overwrite
+    # reformat the gdf file for robustness by the various mesh readers
+    with open(str(filename)) as gdf_file:
+        title = gdf_file.readline()
+        ulen, grav = map(float, gdf_file.readline().split()[:2])
+        isx, isy = map(int, gdf_file.readline().split()[:2])
+        npan = int(gdf_file.readline().split()[0])
+        faces_vertices = np.genfromtxt(gdf_file)
+
+    faces_vertices = faces_vertices.reshape(-1, 3)
+
+    headerStr = (
+        title
+        + str(ulen)
+        + " "
+        + str(grav)
+        + linesep
+        + str(isx)
+        + " "
+        + str(isy)
+        + linesep
+        + str(npan)
+    )
+    np.savetxt(
+        filename, faces_vertices, "%.6e", delimiter=" ", header=headerStr, comments=""
+    )
+
