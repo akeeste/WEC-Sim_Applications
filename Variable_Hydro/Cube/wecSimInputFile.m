@@ -66,7 +66,7 @@ body(1) = bodyClass(hydroFiles); % Create the cube
 body(1).geometryFile = 'geometry/cube.stl';         % Location of Geometry File
 body(1).mass = 'equilibrium';                       % Body mass equal to the displaced water mass
 body(1).inertia = [1e3 1e3 1e3];                    % Arbitrary approximation
-body(1).variableHydro.option = 0;
+body(1).variableHydro.option = 1;
 body(1).variableHydro.hydroForceIndexInitial = 1;
 
 % Viscous drag
